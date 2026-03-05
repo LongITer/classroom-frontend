@@ -4,7 +4,7 @@ import {Breadcrumb} from "@/components/refine-ui/layout/breadcrumb.tsx";
 import {Search} from "lucide-react";
 import {Input} from "@/components/ui/input.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
-import {DEPARTMENTS_OPTIONS} from "@/constants";
+import {DEPARTMENT_OPTIONS} from "@/constants/index.ts";
 import {CreateButton} from "@/components/refine-ui/buttons/create.tsx";
 import {DataTable} from "@/components/refine-ui/data-table/data-table.tsx";
 import {useTable} from "@refinedev/react-table";
@@ -41,7 +41,7 @@ const SubjectsList = () => {
             },
             {
                 id: 'department',
-                accessorKey: 'department',
+                accessorKey: 'department.name',
                 size: 150,
                 header:() => <p className="column-title">Department</p>,
                 cell: ({getValue}) => <Badge variant='secondary'>{getValue<string>()}</Badge>,
@@ -59,7 +59,7 @@ const SubjectsList = () => {
             resource: "subjects",
             pagination: {pageSize: 10, mode: "server"},
             filters: {
-                permanent: [...departmentFilters]
+                permanent: [...departmentFilters, ...searchFilters]
             },
             sorters: {
                 initial: [
@@ -99,7 +99,7 @@ const SubjectsList = () => {
                                 <SelectItem value="all">
                                     All Departments
                                 </SelectItem>
-                                {DEPARTMENTS_OPTIONS.map(departments => (
+                                {DEPARTMENT_OPTIONS.map(departments => (
                                     <SelectItem key={departments.value} value={departments.value} >
                                         {departments.label}
                                     </SelectItem>
