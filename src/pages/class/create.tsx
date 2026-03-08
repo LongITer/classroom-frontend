@@ -77,9 +77,9 @@ const Create = () => {
         },
     ];
     const bannerPublicId = form.watch('bannerCldPubId')
-    const setBannerImage = (file, field) => {
+    const setBannerImage = (file: any, field: any) => {
         if (file) {
-            field.onchange(file.url)
+            field.onChange(file.url)
             form.setValue('bannerCldPubId', file.publicId, {
                 shouldValidate: true,
                 shouldDirty: true
@@ -125,13 +125,17 @@ const Create = () => {
                                             <FormLabel>Banner Image <span className="text-orange-600">*</span></FormLabel>
                                             <FormControl>
                                                 <UploadWidget
-                                                    value={field.value ? {url: field.value, publicId: bannerPublicId ?? ''} : null}
-                                                    onchange={(file: any, field: any) => setBannerImage(file, field)}
+                                                    value={
+                                                        field.value
+                                                            ? { url: field.value as string, publicId: bannerPublicId ?? "" }
+                                                            : null
+                                                    }
+                                                    onChange={(file: any) => setBannerImage(file, field)}
                                                 />
                                             </FormControl>
                                             <FormMessage />
                                             {errors.bannerCldPubId && errors.bannerUrl && (
-                                                <p className='text-destructive text-sm'>{errors.bannerPublicId.message?.toString()}</p>
+                                                <p className='text-destructive text-sm'>{errors.bannerCldPubId.message?.toString()}</p>
                                             )}
                                         </ FormItem>
                                     )}
